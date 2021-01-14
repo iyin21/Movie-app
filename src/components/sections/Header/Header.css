@@ -1,0 +1,12 @@
+.movie-header{
+	width: 100%;
+	background: #2c2c2c;
+}
+.movie-content{
+	height: auto;
+	padding: 10px 5px;
+}
+.movie-logo{
+	width: 500px;
+	margin-top: 10px;
+}
