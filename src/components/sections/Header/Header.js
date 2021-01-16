@@ -5,7 +5,8 @@ const Header = () => {
 	return(
 		<div className= "movie-header">
 			<div className="movie-content">
-			<h2 className="movie-logo">CLEARMOVIES</h2>
+			<img className="movie-logo" src="./images/JEOE3019.JPG" alt="CLEARMOVIES"/>
+			<h3>HD movies at the smallest file size.</h3>
 			</div>
 
 		</div>

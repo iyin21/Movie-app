@@ -5,8 +5,15 @@
 .movie-content{
 	height: auto;
 	padding: 10px 5px;
+	overflow: hidden;
 }
 .movie-logo{
-	width: 500px;
-	margin-top: 10px;
+	width: 100px;
+	margin-top: 5px;
+	height: 50px;
+	float: left;
+
+}
+h3{
+	color: blue;
 }
