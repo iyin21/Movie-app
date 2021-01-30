@@ -4,6 +4,7 @@ import "./Home.css";
 import SearchBar from "../sections/SearchBar/SearchBar";
 import HeroImage from "../sections/HeroImage/HeroImage";
 import ImageGrid from "../sections/ImageGrid/ImageGrid";
+import MovieThumb from '../sections/MovieThumb/MovieThumb';
 import Spinner from "../sections/Spinner/Spinner";
 import LoadMoreBtn from "../sections/LoadMoreBtn/LoadMoreBtn"
 
@@ -20,6 +21,22 @@ class Home extends Component{
 	componentDidMount(){
 		this.setState({loading:true});
 		const endpoint =`${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+		this.fetchItems(endpoint);
+	}
+
+	searchTerm = (searchTerm) =>{
+		let endpoint = '';
+		this.setState({
+			movies: [],
+			loading: true,
+			searchTerm
+		})
+
+		if(searchTerm ===''){
+			endpoint= `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+		}else{
+			endpoint= `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&page=${searchTerm}`;
+		}
 		this.fetchItems(endpoint);
 	}
 	loadMoreItems = () => {
@@ -45,6 +62,7 @@ class Home extends Component{
 				totalPages: result.total_Pages
 			})	
 		})
+		.catch(error => console.error("Error:", error))
 	}
 	// componentDidMount(){
 	// 	this.setState({loading:true});
@@ -67,9 +85,24 @@ class Home extends Component{
 					title= {this.state.heroImage.original_title}
 					text={this.state.heroImage.overview}
 					/>
-					<SearchBar/>
+					<SearchBar callback={this.searchItems} />
 				</div> : null}
-				<ImageGrid/>
+				<div className="home-grid">
+					<ImageGrid
+						header={this.state.searchTerm ? "Search Result" : "popular Movies"}
+						loading = {this.state.loading}
+					>
+						{this.state.movies.map( (element, i)=> {
+							return <MovieThumb 
+								key={i}
+								clickable={true}
+								image={element.poster_path ? `{IMAGE_BASE_URL}${POSTER_SIZE}${element.poster_pacth}` : "./images/no_image.jpg"}
+								movieId={element.id}
+								movieName={element.original_title}
+								/>
+						})}
+						</ImageGrid>
+				</div>
 				<Spinner/>
 				<LoadMoreBtn/>
 			</div>
